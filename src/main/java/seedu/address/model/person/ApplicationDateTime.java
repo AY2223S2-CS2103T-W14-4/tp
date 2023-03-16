@@ -1,10 +1,11 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.LocalDateTime;
 
 import seedu.address.logic.parser.DateTimeParser;
 
-import static java.util.Objects.requireNonNull;
 
 
 /**
