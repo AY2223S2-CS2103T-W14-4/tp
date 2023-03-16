@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -25,6 +26,7 @@ public class Person {
     private final Address address;
     private Status status;
     private final Set<Note> notes = new HashSet<>();
+    private final ApplicationDateTime applicationDateTime;
     private Optional<InterviewDateTime> interviewDateTime;
 
     /**
@@ -38,6 +40,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.status = status;
+        this.applicationDateTime = LocalDateTime.now();
         this.interviewDateTime = interviewDateTime;
         this.notes.addAll(notes);
     }
