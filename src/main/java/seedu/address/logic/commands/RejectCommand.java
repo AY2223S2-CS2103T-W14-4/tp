@@ -5,21 +5,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.note.Note;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.InterviewDateTime;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.NamePhoneNumberPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Status;
 
 
 /**
@@ -90,19 +81,7 @@ public class RejectCommand extends Command {
      */
     private static Person createRejectedPerson(Person personToReject) {
         assert personToReject != null;
-
-        Name updatedName = personToReject.getName();
-        Phone updatedPhone = personToReject.getPhone();
-        Email updatedEmail = personToReject.getEmail();
-        Address updatedAddress = personToReject.getAddress();
-        Status updatedStatus = personToReject.getStatus(); //User not allowed to edit applicant status directly
-        Optional<InterviewDateTime> interviewDateTime = personToReject.getInterviewDateTime();
-        Set<Note> updatedNotes = personToReject.getNotes();
-
-        Person rejectedPerson = new Person(updatedName, updatedPhone, updatedEmail,
-                updatedAddress, updatedStatus, interviewDateTime, updatedNotes);
-        rejectedPerson.rejectPerson();
-        return rejectedPerson;
+        return personToReject.rejectPerson();
     }
 
     @Override

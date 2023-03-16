@@ -24,7 +24,7 @@ public class Person {
 
     // Data fields
     private final Address address;
-    private Status status;
+    private final Status status;
     private final Set<Note> notes = new HashSet<>();
     private final ApplicationDateTime applicationDateTime;
     private Optional<InterviewDateTime> interviewDateTime;
@@ -43,6 +43,22 @@ public class Person {
         this.applicationDateTime = LocalDateTime.now();
         this.interviewDateTime = interviewDateTime;
         this.notes.addAll(notes);
+    }
+
+    /**
+     * Constructor for updating status of person
+     */
+    public Person(Person person, Status newStatus) {
+        this(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                newStatus, person.getInterviewDateTime(), person.getNotes());
+    }
+
+    /**
+     * Constructor for updating status and interview date time of person
+     */
+    public Person(Person person, Status newStatus, Optional<InterviewDateTime> interviewDateTime) {
+        this(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                newStatus, interviewDateTime, person.getNotes());
     }
 
     public Name getName() {
@@ -86,24 +102,14 @@ public class Person {
     }
 
     /**
-     * Sets Status for applicants.
-     * @param status new Status for the applicant.
-     */
-    private void setStatus(Status status) {
-        this.status = status;
-    }
-
-    /**
      * Advances status of applicants, according to application cycle
      */
-    public void advancePerson() {
+    public Person advancePerson(Optional<InterviewDateTime> interviewDateTime) {
         switch (this.status) {
         case APPLIED:
-            setStatus(Status.SHORTLISTED);
-            break;
+            return new Person(this, Status.SHORTLISTED, interviewDateTime);
         case SHORTLISTED:
-            setStatus(Status.ACCEPTED);
-            break;
+            return new Person(this, Status.ACCEPTED);
         default:
             throw new AssertionError("This person's application status cannot be advanced!");
         }
@@ -112,16 +118,8 @@ public class Person {
     /**
      * Changes the status of the applicant to Rejected
      */
-    public void rejectPerson() {
-        this.status = Status.REJECTED;
-    }
-
-    /**
-     * Sets interview dateTime for shortlisted applicants.
-     * @param interviewDateTime Interview dateTime for the applicant.
-     */
-    public void setInterviewDateTime(Optional<InterviewDateTime> interviewDateTime) {
-        this.interviewDateTime = interviewDateTime;
+    public Person rejectPerson() {
+        return new Person(this, Status.REJECTED);
     }
 
     /**
