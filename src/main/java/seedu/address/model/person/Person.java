@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -40,7 +41,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.status = status;
-        this.applicationDateTime = LocalDateTime.now();
+        this.applicationDateTime = new ApplicationDateTime(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
         this.interviewDateTime = interviewDateTime;
         this.notes.addAll(notes);
     }
@@ -87,6 +88,14 @@ public class Person {
      */
     public Set<Note> getNotes() {
         return Collections.unmodifiableSet(notes);
+    }
+
+    /**
+     * Returns the {@code ApplicationDateTime} of the applicant.
+     * @return Application date and time of the applicant.
+     */
+    public ApplicationDateTime getApplicationDateTime() {
+        return applicationDateTime;
     }
 
     /**
